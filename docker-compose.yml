@@ -1,0 +1,11 @@
+services:
+  certfusion:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      CERTFUSION_MODE: auto
+      CERTFUSION_EPSILON: "0.031"
+      CERTFUSION_ALPHA: "0.10"
+    volumes:
+      - ./backend/model_artifacts:/app/backend/model_artifacts:ro

@@ -1,0 +1,26 @@
+name: CI
+on:
+  push:
+  pull_request:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install light backend test dependencies
+        run: pip install fastapi uvicorn python-multipart numpy Pillow scipy nibabel z3-solver pydantic reportlab pytest httpx
+      - name: Backend syntax and engine tests
+        run: |
+          python -m compileall backend/app
+          pytest -q backend/tests
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Build frontend
+        working-directory: frontend
+        run: |
+          npm install --no-audit --no-fund
+          npm run build

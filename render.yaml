@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: certfusion-web
+    runtime: docker
+    plan: starter
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/health
+    envVars:
+      - key: CERTFUSION_MODE
+        value: auto
+      - key: CERTFUSION_EPSILON
+        value: "0.031"
+      - key: CERTFUSION_ALPHA
+        value: "0.10"
