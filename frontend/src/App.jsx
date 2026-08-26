@@ -1,7 +1,7 @@
 import React, {useMemo, useState} from 'react';
 import {
   Activity, Brain, CheckCircle2, ChevronRight, CircleAlert, Download,
-  FileImage, FlaskConical, Gauge, Github, Layers3, LoaderCircle, LockKeyhole,
+  FileImage, FlaskConical, Gauge, Layers3, LoaderCircle, LockKeyhole,
   Network, ScanLine, ShieldCheck, Sparkles, UploadCloud, XCircle
 } from 'lucide-react';
 import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer} from 'recharts';
@@ -51,7 +51,7 @@ export default function App(){
  return <div className="app-shell">
    <header className="topbar">
      <div className="brand"><div className="brand-mark"><Brain size={25}/></div><div><b>CertFusion</b><span>Verification-aware neurosymbolic MRI research system</span></div></div>
-     <div className="header-actions"><span className="research-badge"><FlaskConical size={15}/> Research prototype</span><a href="https://github.com/Shubha-fm/CertFusion-Web" target="_blank" rel="noreferrer"><Github size={19}/></a></div>
+     <div className="header-actions"><span className="research-badge"><FlaskConical size={15}/> Research prototype</span><a href="https://github.com/Shubha-fm/CertFusion-Web" target="_blank" rel="noreferrer" className="github-link">GitHub</a></div>
    </header>
    <main>
      <section className="hero">
@@ -107,7 +107,7 @@ export default function App(){
         ['Bounded verification','Per-rule robust consistency checks with Z3-style UNSAT / SAT / TIMEOUT semantics.',ShieldCheck],
         ['Workflow assurance','Bundled TLA+ state-machine model for safe result and certificate handling.',LockKeyhole],
         ['Uncertainty output','Entropy and a set-valued output using the paper’s α = 0.10 interface.',Gauge],
-        ['Reproducible artifact','API health, model card, audit records, Docker, CI and explicit checkpoint mode.',Github]
+        ['Reproducible artifact','API health, model card, audit records, Docker, CI and explicit checkpoint mode.',Network]
        ].map(([t,d,I])=><div className="arch-card" key={t}><I size={22}/><h3>{t}</h3><p>{d}</p></div>)}</div>
      </section>
    </main>
