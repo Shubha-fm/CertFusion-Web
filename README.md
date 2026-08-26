@@ -1,3 +1,13 @@
+---
+title: CertFusion Web
+emoji: 🧠
+colorFrom: blue
+colorTo: indigo
+sdk: docker
+app_port: 7860
+pinned: false
+---
+
 # CertFusion Web
 
 **Verification-aware neurosymbolic multimodal MRI research application**
@@ -27,7 +37,7 @@ The manuscript package does not contain the trained neural checkpoint and learne
 - **`paper-checkpoint`**: active when `backend/model_artifacts/certfusion.pt` is supplied. This instantiates the four 3D encoders and 2048→512→128→5 fusion head described in the paper.
 - **`research-demo`**: active when no checkpoint is present. It uses a deterministic, input-sensitive surrogate so the complete web, symbolic, verification, uncertainty, reporting, and audit workflow runs immediately. **Demo predictions are not paper results and must not be reported as clinical or experimental evidence.**
 
-The web bounded checker is also deliberately scoped. It checks the seven rules in score/probability intervals around the current output. The paper's stronger experiment uses latent bounds for the fusion head. Replace the web verifier with your archived latent-bound implementation if you want exact experimental reproduction.
+The web bounded checker is deliberately scoped. It checks the seven rules in score/probability intervals around the current output. The paper's stronger experiment uses latent bounds for the fusion head. Replace the web verifier with your archived latent-bound implementation if you want exact experimental reproduction.
 
 ## Architecture
 
@@ -48,15 +58,37 @@ FLAIR┘                 predicate heads ──> 7 symbolic rules ────�
                                              auditable web result
 ```
 
+## Free deployment on Hugging Face Spaces
+
+This repository is ready for a **free Docker Space**.
+
+1. Sign in to Hugging Face and create a new Space.
+2. Choose **Docker** as the SDK and select the free CPU hardware.
+3. Clone the Space repository locally.
+4. Copy this repository into the Space, or add the Space as a second Git remote.
+5. Push the `main` branch to Hugging Face.
+6. Hugging Face will build the Dockerfile and expose the app on port `7860`.
+
+Example using a second remote:
+
+```bash
+git clone https://github.com/Shubha-fm/CertFusion-Web.git
+cd CertFusion-Web
+git remote add space https://huggingface.co/spaces/YOUR-HF-USERNAME/CertFusion-Web
+git push space main
+```
+
+The root README contains the required Hugging Face Space metadata (`sdk: docker`, `app_port: 7860`). The Dockerfile and `serve.py` are also configured for port `7860` while still allowing a `PORT` environment-variable override.
+
 ## Run locally with Docker
 
 ```bash
-git clone <YOUR-REPOSITORY-URL>
+git clone https://github.com/Shubha-fm/CertFusion-Web.git
 cd CertFusion-Web
 docker compose up --build
 ```
 
-Open `http://localhost:8000`.
+Open `http://localhost:8000` when using Docker Compose.
 
 ## Run without Docker
 
@@ -122,21 +154,9 @@ Checked workflow properties:
 
 TLA+ checks the software-level handling of verification states. It **does not** prove classifier accuracy, clinical validity, or abstraction soundness.
 
-## Deploy from GitHub
+## Other Docker deployment
 
-### Render
-
-This repository includes `render.yaml` and a production `Dockerfile`.
-
-1. Push this folder to GitHub.
-2. In Render choose **New → Blueprint**.
-3. Select the repository.
-4. Render detects `render.yaml` and builds the application.
-5. Use persistent/private model storage if the checkpoint should not be committed publicly.
-
-### Any Docker host
-
-The image exposes port `8000` and serves both the React production build and FastAPI from one container.
+The same image can also run on Render, Railway, Cloud Run, Fly.io, or another Docker host. Set the platform's `PORT` variable if it does not use `7860`.
 
 ## API
 
