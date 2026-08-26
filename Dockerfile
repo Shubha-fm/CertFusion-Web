@@ -10,12 +10,15 @@ RUN npm run build
 
 FROM python:3.12-slim AS runtime
 WORKDIR /app
-ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 CERTFUSION_MODE=auto
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    CERTFUSION_MODE=auto \
+    PORT=7860
 COPY backend/requirements.txt ./backend/requirements.txt
 RUN pip install --no-cache-dir -r backend/requirements.txt
 COPY backend ./backend
 COPY formal ./formal
 COPY --from=frontend /frontend/dist ./frontend_dist
 COPY serve.py ./serve.py
-EXPOSE 8000
+EXPOSE 7860
 CMD ["python","serve.py"]
