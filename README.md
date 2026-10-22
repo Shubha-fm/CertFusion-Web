@@ -194,3 +194,7 @@ Do not use the surrogate-mode outputs for these manuscript values.
 ## License
 
 Choose a license appropriate for your data and model-release obligations before making the repository public. Source code can be open even when trained weights require separate controlled distribution.
+
+## Assurance evidence and application-level tests
+
+See [assurance evidence and limitations](docs/ASSURANCE_EVIDENCE.md). The [reference release-policy tests](tests/test_release_contract.py) are executable with `python -m unittest discover -s tests -p 'test_release_contract.py' -v`. They exercise a small independent reference function, **not** real MRI inference or an end-to-end deployed workflow. They must not be cited as independent clinical validation.
